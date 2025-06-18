@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring stratégie SPP/CAP v EÚ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (Cool Gray, Slate, Accent Blue) -->
+    <!-- Application Structure Plan: The SPA is designed as a focused monitoring dashboard. It begins with a clear introduction for RO MPRV SR. The core is divided into two main sections: "Hlavné trendy SPP/CAP" (Main CAP/SPP Trends) featuring an overview of key trends and their progression over time via a line chart, and "Strategická komunikácia a propagácia" (Strategic Communication & Promotion) which includes a breakdown of activity types via a bar chart and a comparative table for EU countries with interactive filtering. This structure was chosen to provide both a macro overview and the ability to drill down into specific data points relevant to policy and communication strategy, facilitating quick understanding and informed decision-making. -->
+    <!-- Visualization & Content Choices: Report Info -> Key CAP/SPP Trends. Goal -> Inform & Track Progress. Viz -> Trend Cards (HTML/CSS) with Unicode icons and Line Chart (Chart.js) for time progression. Interaction -> Hover on line chart for specific data points. Report Info -> Communication Activities. Goal -> Inform & Analyze Mix. Viz -> Bar Chart (Chart.js) for distribution. Interaction -> Static display of percentages. Report Info -> EU Communication Data. Goal -> Compare & Identify Best Practices. Viz -> Interactive Table (HTML/JS) with country selection. Interaction -> Dropdown to select country for detailed view in table. Report Info -> Most Searched Keywords. Goal -> Inform on key terms. Viz -> Simple bulleted lists for each trend. Interaction -> Static display. All charts use Canvas, no SVG or Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { position: relative; height: 40vh; max-height: 400px; width: 100%; max-width: 900px; margin: auto; }
+        .trend-icon-dir { font-size: 1.25rem; line-height: 1; }
+        .trend-up-strong { color: #dc2626; }
+        .trend-up { color: #f97316; }
+        .trend-stable { color: #6b7280; }
+        .country-active { background-color: #e0f2fe; border-color: #3b82f6; }
+        html { scroll-behavior: smooth; }
+
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; }
+        }
+        @media (max-width: 767px) {
+            .chart-container { height: 300px; }
+        }
+    </style>
+</head>
+<body class="bg-cool-gray-50 text-slate-800">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900">Monitoring stratégie SPP/CAP v EÚ</h1>
+            <p class="text-xl md:text-2xl text-blue-600 mt-2 font-medium">Pre RO MPRV SR: Prehľad trendov a komunikácie (upozornenie: ilustratívne dáta založené na všeobecných témach a vyhľadávacích trendoch)</p>
+        </header>
+
+        <main>
+            <section id="intro" class="max-w-4xl mx-auto text-center mb-16">
+                <h2 class="text-2xl font-bold mb-4">Úvod: Monitoring Spoločnej poľnohospodárskej politiky</h2>
+                <p class="text-lg text-slate-600">
+                    Táto interaktívna aplikácia je navrhnutá pre Riadiaci orgán Ministerstva pôdohospodárstva a rozvoja vidieka SR. Poskytuje komplexný prehľad kľúčových trendov a strategickej komunikácie v rámci Spoločnej poľnohospodárskej politiky (SPP) / Common Agricultural Policy (CAP) v členských štátoch EÚ. Prehliadajte si dáta, analyzujte dynamiku a získajte cenné poznatky pre efektívne plánovanie.
+                </p>
+            </section>
+            
+            <section id="main-trends" class="mb-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-8">Hlavné trendy SPP/CAP</h3>
+                <p class="text-lg text-slate-600 mb-8 text-center">
+                    Táto sekcia predstavuje päť kľúčových trendov v rámci SPP/CAP, ktoré sú sledované v členských krajinách EÚ. Prehľadové karty zobrazujú aktuálny stav a smer vývoja každého trendu, zatiaľ čo graf nižšie vizualizuje ich dynamiku v čase od Q1 2024 do Q2 2025.
+                </p>
+                <div id="trends-overview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                </div>
+                <div class="chart-container">
+                    <canvas id="trendOverTimeChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-slate-500 mt-4">Graf zobrazuje vývoj intenzity jednotlivých trendov v čase.</p>
+            </section>
+
+            <section id="keywords" class="mb-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-8">Najvyhľadávanejšie kľúčové výrazy</h3>
+                <p class="text-lg text-slate-600 mb-8 text-center">
+                    Tu nájdete príklady najčastejšie vyhľadávaných kľúčových výrazov súvisiacich s hlavnými SPP/CAP trendmi. Tieto výrazy naznačujú, čo verejnosť a zainteresované strany aktívne vyhľadávajú a o čo sa zaujímajú online.
+                </p>
+                <div id="keywords-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+            </section>
+
+            <section id="communication-strategy" class="mb-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-8">Strategická komunikácia a propagácia</h3>
+                <p class="text-lg text-slate-600 mb-8 text-center">
+                    Táto časť monitoringu sa zameriava na rôzne aspekty strategickej komunikácie a propagácie SPP/CAP v krajinách EÚ. Prezentujeme typy komunikačných aktivít a porovnávaciu analýzu efektivity komunikácie medzi vybranými členskými štátmi, čo môže slúžiť ako inšpirácia pre osvedčené postupy.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-bold mb-4 text-center">Typy komunikačných aktivít (relatívna intenzita)</h4>
+                        <div class="chart-container h-64 max-h-[300px] md:h-72">
+                            <canvas id="communicationActivitiesChart"></canvas>
+                        </div>
+                         <p class="text-center text-sm text-slate-500 mt-4">Rozloženie typov komunikačných aktivít v sledovaných krajinách.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold mb-4 text-center">Komparácia efektívnosti komunikácie v EÚ</h4>
+                        <div class="mb-4 text-center">
+                            <label for="country-select" class="block text-slate-700 font-medium mb-2">Vyberte krajinu:</label>
+                            <select id="country-select" class="block w-full max-w-xs mx-auto p-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            </select>
+                        </div>
+                        <div id="eu-comparison-table" class="bg-blue-50 p-4 rounded-xl shadow-inner">
+                            <div class="text-center text-slate-700">Vyberte krajinu pre zobrazenie detailov.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="recommendations" class="mt-16">
+                <h3 class="text-2xl font-bold text-center mb-8">Kľúčové odporúčania pre RO MPRV SR</h3>
+                <p class="text-lg text-slate-600 mb-8 text-center">
+                    Na základe získaných dát a dynamiky trendov v SPP/CAP navrhujeme nasledujúce strategické odporúčania pre RO MPRV SR:
+                </p>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+                    <div class="bg-blue-50 p-6 rounded-xl">
+                        <span class="text-3xl">🌿</span>
+                        <h4 class="font-bold text-lg mt-2 mb-1">Posilniť komunikáciu o ekologizácii</h4>
+                        <p class="text-slate-600">Vzhľadom na rastúci trend ekologizácie je kľúčové efektívne komunikovať prínosy a podporu pre zelené poľnohospodárstvo.</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl">
+                        <span class="text-3xl">🚀</span>
+                        <h4 class="font-bold text-lg mt-2 mb-1">Zintenzívniť digitalizáciu vidieka</h4>
+                        <p class="text-slate-600">Využiť potenciál digitalizácie nielen v poľnohospodárstve, ale aj v rozvoji inteligentných riešení pre vidiecke oblasti.</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl">
+                        <span class="text-3xl">🤝</span>
+                        <h4 class="font-bold text-lg mt-2 mb-1">Spolupráca s médiami a online kanálmi</h4>
+                        <p class="text-slate-600">Diverzifikovať komunikačné kanály, s osobitným zameraním na sociálne médiá a online kampane pre dosiahnutie širšieho dosahu.</p>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-xl">
+                        <span class="text-3xl">📈</span>
+                        <h4 class="font-bold text-lg mt-2 mb-1">Prebrať osvedčené postupy z EÚ</h4>
+                        <p class="text-slate-600">Analyzovať úspešné komunikačné a propagačné stratégie z iných členských štátov a adaptovať ich na slovenské podmienky.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-10 pt-6 border-t border-slate-200">
+            <p class="text-slate-400">&copy; 2025 Daniel Živica, Lead Masters s.r.o., Consulting Associates s.r.o.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const trendsData = [
+                { name: 'Ekologizácia a udržateľnosť', value: 75, trend: 'rastúci', trendClass: 'trend-up', icon: '🌿' },
+                { name: 'Digitalizácia v poľnohospodárstve', value: 60, trend: 'silne rastúci', trendClass: 'trend-up-strong', icon: '💻' },
+                { name: 'Podpora mladých farmárov', value: 50, trend: 'pretrvávajúci', trendClass: 'trend-stable', icon: '👨‍🌾' },
+                { name: 'Rozvoj vidieka', value: 65, trend: 'pretrvávajúci', trendClass: 'trend-stable', icon: '🏡' },
+                { name: 'Inovácie v agrosektore', value: 45, trend: 'rastúci', trendClass: 'trend-up', icon: '💡' }
+            ];
+
+            const trendOverTimeData = {
+                labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025'],
+                datasets: [
+                    { label: 'Ekologizácia a udržateľnosť', data: [60, 65, 70, 72, 73, 75], borderColor: '#10b981', backgroundColor: '#10b981', tension: 0.2, pointRadius: 5, pointHoverRadius: 7, fill: false },
+                    { label: 'Digitalizácia v poľnohospodárstve', data: [40, 45, 50, 55, 58, 60], borderColor: '#3b82f6', backgroundColor: '#3b82f6', tension: 0.2, pointRadius: 5, pointHoverRadius: 7, fill: false },
+                    { label: 'Podpora mladých farmárov', data: [50, 50, 48, 50, 51, 50], borderColor: '#f97316', backgroundColor: '#f97316', tension: 0.2, pointRadius: 5, pointHoverRadius: 7, fill: false },
+                    { label: 'Rozvoj vidieka', data: [62, 63, 65, 66, 65, 65], borderColor: '#8b5cf6', backgroundColor: '#8b5cf6', tension: 0.2, pointRadius: 5, pointHoverRadius: 7, fill: false },
+                    { label: 'Inovácie v agrosektore', data: [35, 38, 40, 42, 44, 45], borderColor: '#ef4444', backgroundColor: '#ef4444', tension: 0.2, pointRadius: 5, pointHoverRadius: 7, fill: false }
+                ]
+            };
+
+            const keywordsData = {
+                'Ekologizácia a udržateľnosť': ['Zelené poľnohospodárstvo', 'Trvalo udržateľné farmy', 'Agroekológia EÚ', 'Klíma a SPP'],
+                'Digitalizácia v poľnohospodárstve': ['Smart farming', 'Digitálne technológie v agrosektore', 'Precízne poľnohospodárstvo', 'IoT v poľnohospodárstve'],
+                'Podpora mladých farmárov': ['Dotácie mladým farmárom', 'Štartovacia pomoc pre farmárov', 'Nová generácia farmárov EÚ'],
+                'Rozvoj vidieka': ['Programy rozvoja vidieka', 'LEADER programy', 'Rural development EU funds', 'Život na vidieku'],
+                'Inovácie v agrosektore': ['EIP-AGRI', 'Poľnohospodársky výskum EÚ', 'Agroinovácie']
+            };
+
+
+            const communicationActivitiesData = {
+                labels: ['Online kampane', 'Semináre/Workshopy', 'Spolupráca s médiami', 'Sociálne médiá', 'Priamy dialóg so stakeholdermi'],
+                data: [30, 20, 25, 15, 10]
+            };
+
+            const euCommunicationData = [
+                { country: 'Slovensko', campaigns: 70, events: 50, socialMedia: 65, sentiment: 'neutrálny', description: 'Zameranie na základné informačné kampane s priestorom na posilnenie online interakcie.' },
+                { country: 'Nemecko', campaigns: 85, events: 70, socialMedia: 80, sentiment: 'pozitívny', description: 'Vysoká úroveň zapojenia verejnosti cez integrované online a offline kampane, silná prítomnosť na sociálnych médiách.' },
+                { country: 'Francúzsko', campaigns: 75, events: 60, socialMedia: 70, sentiment: 'neutrálny', description: 'Efektívna kombinácia tradičných médií a cielených regionálnych podujatí, potreba zvýšiť digitálny dosah.' },
+                { country: 'Poľsko', campaigns: 60, events: 45, socialMedia: 55, sentiment: 'neutrálny', description: 'Rastúci dôraz na digitálne nástroje, stále však s rezervami v dosahu a interakcii.' },
+                { country: 'Španielsko', campaigns: 80, events: 65, socialMedia: 75, sentiment: 'pozitívny', description: 'Silné digitálne kampane a aktívne zapájanie farmárov do diskusie prostredníctvom online platforiem.' },
+                { country: 'Írsko', campaigns: 70, events: 55, socialMedia: 70, sentiment: 'pozitívny', description: 'Cielená komunikácia na vidiecke komunity a aktívne využívanie lokálnych podujatí pre šírenie informácií.' },
+                { country: 'Dánsko', campaigns: 78, events: 68, socialMedia: 85, sentiment: 'pozitívny', description: 'Inovatívne využívanie dát a cielenej reklamy, vysoká angažovanosť na sociálnych médiách.' },
+                { country: 'Maďarsko', campaigns: 55, events: 40, socialMedia: 50, sentiment: 'neutrálny', description: 'Tradičnejšie komunikačné metódy, potenciál pre väčšie zapojenie online publika.' }
+            ];
+
+            const trendsOverview = document.getElementById('trends-overview');
+            trendsData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-blue-50 p-6 rounded-xl shadow-sm text-center';
+                card.innerHTML = `
+                    <div class="text-4xl mb-3">${item.icon}</div>
+                    <h4 class="text-xl font-bold mb-2">${item.name}</h4>
+                    <p class="text-slate-700">Intenzita: <span class="font-semibold text-blue-700">${item.value}%</span></p>
+                    <p class="text-sm font-medium ${item.trendClass}">Trend: ${item.trend} <span class="trend-icon-dir">${item.trend.includes('rastúci') ? '↑' : '→'}</span></p>
+                `;
+                trendsOverview.appendChild(card);
+            });
+
+            const trendOverTimeCtx = document.getElementById('trendOverTimeChart').getContext('2d');
+            new Chart(trendOverTimeCtx, {
+                type: 'line',
+                data: trendOverTimeData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#334155'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Intenzita (%)',
+                                color: '#475569'
+                            },
+                            ticks: {
+                                color: '#334155'
+                            },
+                            grid: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#334155'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const keywordsContainer = document.getElementById('keywords-container');
+            for (const trendName in keywordsData) {
+                const keywordsCard = document.createElement('div');
+                keywordsCard.className = 'bg-blue-50 p-6 rounded-xl shadow-sm';
+                keywordsCard.innerHTML = `
+                    <h4 class="text-xl font-bold mb-3 text-center">${trendName}</h4>
+                    <ul class="list-disc list-inside text-slate-700 space-y-1">
+                        ${keywordsData[trendName].map(keyword => `<li>${keyword}</li>`).join('')}
+                    </ul>
+                `;
+                keywordsContainer.appendChild(keywordsCard);
+            }
+
+            const communicationActivitiesCtx = document.getElementById('communicationActivitiesChart').getContext('2d');
+            new Chart(communicationActivitiesCtx, {
+                type: 'bar',
+                data: {
+                    labels: communicationActivitiesData.labels,
+                    datasets: [{
+                        label: 'Relatívna intenzita',
+                        data: communicationActivitiesData.data,
+                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#334155',
+                                callback: function(value, index, values) {
+                                    const label = this.getLabelForValue(value);
+                                    if (label.length > 16) {
+                                        return label.split(' ').map((word, i, arr) => {
+                                            if (word.length > 16 || (word.length + (arr[i-1] ? arr[i-1].length : 0)) > 16) {
+                                                return word;
+                                            }
+                                            return (i > 0 ? ' ' : '') + word;
+                                        }).join('\n');
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Relatívna intenzita (%)',
+                                color: '#475569'
+                            },
+                             ticks: {
+                                color: '#334155'
+                            },
+                            grid: {
+                                color: '#e2e8f0'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const countrySelect = document.getElementById('country-select');
+            const euComparisonTable = document.getElementById('eu-comparison-table');
+
+            euCommunicationData.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.country;
+                option.textContent = item.country;
+                countrySelect.appendChild(option);
+            });
+
+            countrySelect.addEventListener('change', (event) => {
+                const selectedCountryName = event.target.value;
+                const selectedCountryData = euCommunicationData.find(d => d.country === selectedCountryName);
+                if (selectedCountryData) {
+                    euComparisonTable.innerHTML = `
+                        <h4 class="text-xl font-bold mb-4 text-center">${selectedCountryData.country}</h4>
+                        <ul class="list-disc list-inside text-left space-y-2">
+                            <li><strong>Intenzita kampaní:</strong> ${selectedCountryData.campaigns}%</li>
+                            <li><strong>Intenzita podujatí:</strong> ${selectedCountryData.events}%</li>
+                            <li><strong>Intenzita sociálnych médií:</strong> ${selectedCountryData.socialMedia}%</li>
+                            <li><strong>Celkový sentiment:</strong> <span class="font-semibold text-blue-800">${selectedCountryData.sentiment}</span></li>
+                            <li><strong>Popis prístupu:</strong> ${selectedCountryData.description}</li>
+                        </ul>
+                    `;
+                } else {
+                    euComparisonTable.innerHTML = `<div class="text-center text-slate-700">Vyberte krajinu pre zobrazenie detailov.</div>`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
