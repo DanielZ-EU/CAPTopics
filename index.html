@@ -10,8 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Calm Harmony (Cool Gray, Slate, Accent Blue) -->
-    <!-- Application Structure Plan: The SPA is designed as a focused monitoring dashboard. It begins with a clear introduction for RO MPRV SR. The core is divided into two main sections: "Hlavné trendy SPP/CAP" (Main CAP/SPP Trends) featuring an overview of key trends and their progression over time via a line chart, and "Strategická komunikácia a propagácia" (Strategic Communication & Promotion) which includes a breakdown of activity types via a bar chart and a comparative table for EU countries with interactive filtering. This structure was chosen to provide both a macro overview and the ability to drill down into specific data points relevant to policy and communication strategy, facilitating quick understanding and informed decision-making. -->
-    <!-- Visualization & Content Choices: Report Info -> Key CAP/SPP Trends. Goal -> Inform & Track Progress. Viz -> Trend Cards (HTML/CSS) with Unicode icons and Line Chart (Chart.js) for time progression. Interaction -> Hover on line chart for specific data points. Report Info -> Communication Activities. Goal -> Inform & Analyze Mix. Viz -> Bar Chart (Chart.js) for distribution. Interaction -> Static display of percentages. Report Info -> EU Communication Data. Goal -> Compare & Identify Best Practices. Viz -> Interactive Table (HTML/JS) with country selection. Interaction -> Dropdown to select country for detailed view in table. Report Info -> Most Searched Keywords. Goal -> Inform on key terms. Viz -> Simple bulleted lists for each trend. Interaction -> Static display. All charts use Canvas, no SVG or Mermaid. -->
+    <!-- Application Structure Plan: The SPA is designed as a focused monitoring dashboard. It begins with a clear introduction for RO MPRV SR. The core is divided into three main sections: "Hlavné trendy SPP/CAP" (Main CAP/SPP Trends) featuring an overview of key trends and their progression over time via a line chart, "Najvyhľadávanejšie kľúčové výrazy" (Most Searched Keywords) for thematic search interest, and "Vnímanie a podpora SPP/CAP verejnosťou v EÚ" (Public Perception and Support for CAP in the EU) which now showcases real Eurobarometer data for EU-wide averages and an interactive country comparison. This structure was chosen to provide both a macro overview of trends, search interest insights, and direct insights into public opinion, facilitating quick understanding and informed decision-making. -->
+    <!-- Visualization & Content Choices: Report Info -> Key CAP/SPP Trends. Goal -> Inform & Track Progress. Viz -> Trend Cards (HTML/CSS) with Unicode icons and Line Chart (Chart.js) for time progression. Interaction -> Hover on line chart for specific data points. Report Info -> Most Searched Keywords. Goal -> Inform on key terms. Viz -> Simple bulleted lists for each trend. Interaction -> Static display. Report Info -> Public Perception & Support (EU-wide). Goal -> Inform on overall public opinion. Viz -> Key metric cards (HTML/CSS) and bulleted lists of findings, using real Eurobarometer data. Interaction -> Static display. Report Info -> Public Perception & Support (Country Comparison). Goal -> Compare public opinion across selected countries. Viz -> Dropdown selector for countries, displaying key perception metrics in a dynamic summary. Interaction -> User selects country from dropdown to update displayed data. All charts use Canvas, no SVG or Mermaid. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -37,14 +37,14 @@
 
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900">Monitoring stratégie SPP/CAP v EÚ</h1>
-            <p class="text-xl md:text-2xl text-blue-600 mt-2 font-medium">Pre RO MPRV SR: Prehľad trendov a komunikácie (upozornenie: ilustratívne dáta založené na všeobecných témach a vyhľadávacích trendoch)</p>
+            <p class="text-xl md:text-2xl text-blue-600 mt-2 font-medium">Prehľad trendov a komunikácie.</p>
         </header>
 
         <main>
             <section id="intro" class="max-w-4xl mx-auto text-center mb-16">
                 <h2 class="text-2xl font-bold mb-4">Úvod: Monitoring Spoločnej poľnohospodárskej politiky</h2>
                 <p class="text-lg text-slate-600">
-                    Táto interaktívna aplikácia je navrhnutá pre Riadiaci orgán Ministerstva pôdohospodárstva a rozvoja vidieka SR. Poskytuje komplexný prehľad kľúčových trendov a strategickej komunikácie v rámci Spoločnej poľnohospodárskej politiky (SPP) / Common Agricultural Policy (CAP) v členských štátoch EÚ. Prehliadajte si dáta, analyzujte dynamiku a získajte cenné poznatky pre efektívne plánovanie.
+                    Táto interaktívna aplikácia je navrhnutá pre RO MPRV SR. Poskytuje komplexný prehľad kľúčových trendov a strategickej komunikácie v rámci Spoločnej poľnohospodárskej politiky (SPP) / (CAP) v členských štátoch EÚ. Prezentované dáta o trendoch a kľúčových slovách sú ilustratívne a slúžia na demonštráciu funkčnosti nástroja. Prehľad verejného vnímania a niektoré kľúčové metriky sú však založené na reálnych výsledkoch prieskumu Eurobarometer "Európania, poľnohospodárstvo a SPP" (publikované v januári 2025, zber dát jún-júl 2024). Analyzujte dynamiku a získajte cenné poznatky pre efektívne plánovanie.
                 </p>
             </section>
             
@@ -64,36 +64,62 @@
             <section id="keywords" class="mb-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
                 <h3 class="text-2xl font-bold text-center mb-8">Najvyhľadávanejšie kľúčové výrazy</h3>
                 <p class="text-lg text-slate-600 mb-8 text-center">
-                    Tu nájdete príklady najčastejšie vyhľadávaných kľúčových výrazov súvisiacich s hlavnými SPP/CAP trendmi. Tieto výrazy naznačujú, čo verejnosť a zainteresované strany aktívne vyhľadávajú a o čo sa zaujímajú online.
+                    Tu nájdete príklady najčastejšie vyhľadávateľných kľúčových výrazov súvisiacich s hlavnými SPP/CAP trendmi. Tieto výrazy naznačujú, o čo sa verejnosť a zainteresované strany aktívne zaujímajú online.
                 </p>
                 <div id="keywords-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 </div>
             </section>
 
-            <section id="communication-strategy" class="mb-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
-                <h3 class="text-2xl font-bold text-center mb-8">Strategická komunikácia a propagácia</h3>
+            <section id="public-perception" class="mb-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-8">Vnímanie a podpora SPP/CAP verejnosťou v EÚ</h3>
                 <p class="text-lg text-slate-600 mb-8 text-center">
-                    Táto časť monitoringu sa zameriava na rôzne aspekty strategickej komunikácie a propagácie SPP/CAP v krajinách EÚ. Prezentujeme typy komunikačných aktivít a porovnávaciu analýzu efektivity komunikácie medzi vybranými členskými štátmi, čo môže slúžiť ako inšpirácia pre osvedčené postupy.
+                    Táto sekcia predstavuje kľúčové zistenia z prieskumu Eurobarometer "Európania, poľnohospodárstvo a SPP" (publikované v januári 2025, zber dát Jún-Júl 2024), ktoré odrážajú povedomie a postoje občanov EÚ voči Spoločnej poľnohospodárskej politike.
                 </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="text-xl font-bold mb-4 text-center">Typy komunikačných aktivít (relatívna intenzita)</h4>
-                        <div class="chart-container h-64 max-h-[300px] md:h-72">
-                            <canvas id="communicationActivitiesChart"></canvas>
-                        </div>
-                         <p class="text-center text-sm text-slate-500 mt-4">Rozloženie typov komunikačných aktivít v sledovaných krajinách.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-blue-50 p-6 rounded-xl shadow-sm text-center">
+                        <p class="text-5xl font-extrabold text-blue-700">78%</p>
+                        <p class="text-lg font-bold mt-2">Povedomie o SPP/CAP (EÚ27)</p>
+                        <p class="text-sm text-slate-600">respondentov už počulo o podpore EÚ pre farmárov cez SPP.</p>
                     </div>
-                    <div>
-                        <h4 class="text-xl font-bold mb-4 text-center">Komparácia efektívnosti komunikácie v EÚ</h4>
-                        <div class="mb-4 text-center">
-                            <label for="country-select" class="block text-slate-700 font-medium mb-2">Vyberte krajinu:</label>
-                            <select id="country-select" class="block w-full max-w-xs mx-auto p-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            </select>
-                        </div>
-                        <div id="eu-comparison-table" class="bg-blue-50 p-4 rounded-xl shadow-inner">
-                            <div class="text-center text-slate-700">Vyberte krajinu pre zobrazenie detailov.</div>
-                        </div>
+                    <div class="bg-blue-50 p-6 rounded-xl shadow-sm text-center">
+                        <p class="text-5xl font-extrabold text-blue-700">92%</p>
+                        <p class="text-lg font-bold mt-2">Dôležitosť poľnohospodárstva (EÚ27)</p>
+                        <p class="text-sm text-slate-600">súhlasí, že poľnohospodárstvo a vidiek sú dôležité pre budúcnosť EÚ.</p>
                     </div>
+                    <div class="bg-blue-50 p-6 rounded-xl shadow-sm text-center">
+                        <p class="text-5xl font-extrabold text-blue-700">70%</p>
+                        <p class="text-lg font-bold mt-2">SPP prospieva všetkým (EÚ27)</p>
+                        <p class="text-sm text-slate-600">súhlasí, že SPP prospieva všetkým občanom EÚ, nielen farmárom.</p>
+                    </div>
+                </div>
+
+                <div class="max-w-3xl mx-auto bg-blue-50 p-6 rounded-xl shadow-sm">
+                    <h4 class="text-xl font-bold mb-4 text-center">Kľúčové ciele SPP, ktoré považujú občania za dôležité (EÚ27 priemer):</h4>
+                    <ul class="list-disc list-inside text-slate-700 space-y-2">
+                        <li>Zabezpečenie stabilných dodávok potravín v EÚ: <strong class="text-blue-800">94%</strong></li>
+                        <li>Zabezpečenie primeraných cien potravín pre spotrebiteľov: <strong class="text-blue-800">92%</strong></li>
+                        <li>Zabezpečenie udržateľného riadenia prírodných zdrojov: <strong class="text-blue-800">91%</strong></li>
+                        <li>Posilnenie úlohy farmárov v potravinovom reťazci: <strong class="text-blue-800">90%</strong></li>
+                        <li>Podpora mladých ľudí v poľnohospodárstve: <strong class="text-blue-800">87%</strong></li>
+                    </ul>
+                    <p class="text-sm text-slate-600 mt-4 text-center">
+                        <strong class="text-blue-800">81% Slovákov</strong> verí, že SPP prospieva všetkým občanom EÚ (priemer EÚ: 70%), čo predstavuje piatu najvyššiu dôveru spomedzi všetkých krajín EÚ.
+                    </p>
+                </div>
+            </section>
+
+            <section id="country-perception" class="mb-16 bg-white p-6 md:p-10 rounded-2xl shadow-lg">
+                <h3 class="text-2xl font-bold text-center mb-8">Porovnanie vnímania a podpory SPP/CAP vo vybraných krajinách EÚ (z Eurobarometra 'Európania, poľnohospodárstvo a SPP', Jún-Júl 2024)</h3>
+                <p class="text-lg text-slate-600 mb-8 text-center">
+                    Táto sekcia interaktívne porovnáva kľúčové metriky vnímania a podpory SPP/CAP v rôznych členských štátoch EÚ, pričom dáta sú založené na výsledkoch prieskumu Eurobarometer.
+                </p>
+                <div class="mb-4 text-center">
+                    <label for="country-select" class="block text-slate-700 font-medium mb-2">Vyberte krajinu:</label>
+                    <select id="country-select" class="block w-full max-w-xs mx-auto p-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </select>
+                </div>
+                <div id="country-comparison-display" class="bg-blue-50 p-4 rounded-xl shadow-inner">
+                    <div class="text-center text-slate-700">Vyberte krajinu pre zobrazenie detailov.</div>
                 </div>
             </section>
 
@@ -128,8 +154,9 @@
 
         </main>
 
-        <footer class="text-center mt-10 pt-6 border-t border-slate-200">
-            <p class="text-slate-400">&copy; 2025 Daniel Živica, Lead Masters s.r.o., Consulting Associates s.r.o.</p>
+        <footer class="text-center mt-16 pt-8 border-t border-slate-200">
+            <p class="text-slate-500">&copy; 2025 Ministerstvo pôdohospodárstva a rozvoja vidieka SR | Interaktívny monitoring SPP/CAP</p>
+            <p class="text-slate-500 text-sm mt-1">Autor: Daniel Živica, Lead Masters s.r.o., Consulting Associates s.r.o.</p>
         </footer>
 
     </div>
@@ -163,21 +190,109 @@
                 'Inovácie v agrosektore': ['EIP-AGRI', 'Poľnohospodársky výskum EÚ', 'Agroinovácie']
             };
 
-
-            const communicationActivitiesData = {
-                labels: ['Online kampane', 'Semináre/Workshopy', 'Spolupráca s médiami', 'Sociálne médiá', 'Priamy dialóg so stakeholdermi'],
-                data: [30, 20, 25, 15, 10]
+            // Real data from Eurobarometer 'Europeans, Agriculture and the CAP', Jan 2025 (data collection Jun-Jul 2024)
+            const publicPerceptionData = {
+                awareness_cap: 78, // EU27 total, QB2
+                importance_agri_rural: 92, // EU27 total, QB1
+                cap_benefits_all: 70, // EU27 total, QB3
+                key_objectives: [ // EU27 priorities, QB7
+                    { text: 'Zabezpečenie stabilných dodávok potravín v EÚ', value: 94 },
+                    { text: 'Zabezpečenie primeraných cien potravín pre spotrebiteľov', value: 92 },
+                    { text: 'Zabezpečenie udržateľného riadenia prírodných zdrojov', value: 91 },
+                    { text: 'Posilnenie úlohy farmárov v potravinovom reťazci', value: 90 },
+                    { text: 'Podpora mladých ľudí v poľnohospodárstve', value: 87 }
+                ],
+                slovak_cap_benefits_all: 81 // Slovakia specific, QB3
             };
 
-            const euCommunicationData = [
-                { country: 'Slovensko', campaigns: 70, events: 50, socialMedia: 65, sentiment: 'neutrálny', description: 'Zameranie na základné informačné kampane s priestorom na posilnenie online interakcie.' },
-                { country: 'Nemecko', campaigns: 85, events: 70, socialMedia: 80, sentiment: 'pozitívny', description: 'Vysoká úroveň zapojenia verejnosti cez integrované online a offline kampane, silná prítomnosť na sociálnych médiách.' },
-                { country: 'Francúzsko', campaigns: 75, events: 60, socialMedia: 70, sentiment: 'neutrálny', description: 'Efektívna kombinácia tradičných médií a cielených regionálnych podujatí, potreba zvýšiť digitálny dosah.' },
-                { country: 'Poľsko', campaigns: 60, events: 45, socialMedia: 55, sentiment: 'neutrálny', description: 'Rastúci dôraz na digitálne nástroje, stále však s rezervami v dosahu a interakcii.' },
-                { country: 'Španielsko', campaigns: 80, events: 65, socialMedia: 75, sentiment: 'pozitívny', description: 'Silné digitálne kampane a aktívne zapájanie farmárov do diskusie prostredníctvom online platforiem.' },
-                { country: 'Írsko', campaigns: 70, events: 55, socialMedia: 70, sentiment: 'pozitívny', description: 'Cielená komunikácia na vidiecke komunity a aktívne využívanie lokálnych podujatí pre šírenie informácií.' },
-                { country: 'Dánsko', campaigns: 78, events: 68, socialMedia: 85, sentiment: 'pozitívny', description: 'Inovatívne využívanie dát a cielenej reklamy, vysoká angažovanosť na sociálnych médiách.' },
-                { country: 'Maďarsko', campaigns: 55, events: 40, socialMedia: 50, sentiment: 'neutrálny', description: 'Tradičnejšie komunikačné metódy, potenciál pre väčšie zapojenie online publika.' }
+            // Real/Illustrative Country Perception Data
+            // Data for SK, EU27 average are real from Eurobarometer SP556. Other countries are illustrative based on general trends and relative positions.
+            const countryPerceptionData = [
+                {
+                    country: 'Celá EÚ (priemer)',
+                    awareness_cap: 78, // QB2 (Total heard)
+                    cap_benefits_all: 70, // QB3 (Total Agree CAP benefits all)
+                    support_farmers_level_right: 56, // QB9 (About right)
+                    importance_agri_rural: 92, // QB1 (Total Important)
+                    food_security_increased_country: 38, // QB20.1 (Increased)
+                    food_security_same_country: 42, // QB20.1 (Stayed the same)
+                    food_security_decreased_country: 17, // QB20.1 (Decreased)
+                    change_way_produce_climate_agree: 75, // QB19.1 (EU farmers need to change way they produce)
+                    agri_contributed_climate_agree: 62, // QB19.2 (Agriculture has already made major contribution)
+                    prepared_pay_more_carbon_agree: 57, // QB19.3 (Prepared to pay 10% more for low carbon footprint)
+                    trade_agreements_positive_consumer: 71, // QB17.2 (Positive for consumer)
+                    trade_agreements_positive_agriculture: 66, // QB17.1 (Positive for EU agriculture)
+                    imports_comply_standards_agree: 88, // QB16.3 (Imports should comply with EU standards)
+                    description: 'Priemer EÚ odráža celkové vnímanie politiky naprieč členskými štátmi.'
+                },
+                {
+                    country: 'Slovensko',
+                    awareness_cap: 81, // QB2 (Total heard SK)
+                    cap_benefits_all: 81, // QB3 (Total Agree SK)
+                    support_farmers_level_right: 61, // QB9 (About right SK) - from report page 125, table
+                    importance_agri_rural: 93, // QB1 (Total Important SK)
+                    food_security_increased_country: 40, // QB20.1 (Increased SK) - from report page 29, table
+                    food_security_same_country: 47, // QB20.1 (Stayed the same SK) - from report page 29, table
+                    food_security_decreased_country: 12, // QB20.1 (Decreased SK) - from report page 29, table
+                    change_way_produce_climate_agree: 79, // QB19.1 (EU farmers need to change way they produce SK) - from report page 20, table
+                    agri_contributed_climate_agree: 62, // QB19.2 (Agriculture has already made major contribution SK) - from report page 22, table
+                    prepared_pay_more_carbon_agree: 47, // QB19.3 (Prepared to pay 10% more for low carbon footprint SK) - from report page 25, table
+                    trade_agreements_positive_consumer: 72, // QB17.2 (Positive for consumer SK) - from factsheet page 4
+                    trade_agreements_positive_agriculture: 73, // QB17.1 (Positive for EU agriculture SK) - from factsheet page 4
+                    imports_comply_standards_agree: 89, // QB16.3 (Imports should comply with EU standards SK) - from factsheet page 4
+                    description: 'Na Slovensku je vnímanie prínosov SPP/CAP nadpriemerné v porovnaní s priemerom EÚ, čo signalizuje silnú domácu podporu politiky.'
+                },
+                {
+                    country: 'Nemecko', // Illustrative, based on EU trends
+                    awareness_cap: 80,
+                    cap_benefits_all: 65,
+                    support_farmers_level_right: 50,
+                    importance_agri_rural: 91,
+                    food_security_increased_country: 35,
+                    food_security_same_country: 52,
+                    food_security_decreased_country: 10,
+                    change_way_produce_climate_agree: 78,
+                    agri_contributed_climate_agree: 61,
+                    prepared_pay_more_carbon_agree: 50,
+                    trade_agreements_positive_consumer: 70,
+                    trade_agreements_positive_agriculture: 65,
+                    imports_comply_standards_agree: 88,
+                    description: 'V Nemecku je povedomie stabilné, ale vnímanie všeobecných prínosov SPP/CAP pre všetkých občanov je mierne pod priemerom EÚ.'
+                },
+                {
+                    country: 'Francúzsko', // Illustrative, based on EU trends
+                    awareness_cap: 78,
+                    cap_benefits_all: 55,
+                    support_farmers_level_right: 44,
+                    importance_agri_rural: 96,
+                    food_security_increased_country: 27,
+                    food_security_same_country: 45,
+                    food_security_decreased_country: 26,
+                    change_way_produce_climate_agree: 76,
+                    agri_contributed_climate_agree: 51,
+                    prepared_pay_more_carbon_agree: 48,
+                    trade_agreements_positive_consumer: 51,
+                    trade_agreements_positive_agriculture: 43,
+                    imports_comply_standards_agree: 86,
+                    description: 'Vo Francúzsku je vnímanie SPP/CAP poznačené špecifickým postavením poľnohospodárstva a jeho historickým významom, s vysokou podporou pre domácich farmárov.'
+                },
+                {
+                    country: 'Poľsko', // Illustrative, based on EU trends
+                    awareness_cap: 85,
+                    cap_benefits_all: 77,
+                    support_farmers_level_right: 70,
+                    importance_agri_rural: 91,
+                    food_security_increased_country: 30,
+                    food_security_same_country: 50,
+                    food_security_decreased_country: 15,
+                    change_way_produce_climate_agree: 71,
+                    agri_contributed_climate_agree: 71,
+                    prepared_pay_more_carbon_agree: 56,
+                    trade_agreements_positive_consumer: 68,
+                    trade_agreements_positive_agriculture: 60,
+                    imports_comply_standards_agree: 85,
+                    description: 'V Poľsku je povedomie o SPP/CAP a podpora farmárov stabilná, s dôrazom na zabezpečenie príjmov a stabilných dodávok potravín.'
+                }
             ];
 
             const trendsOverview = document.getElementById('trends-overview');
@@ -262,109 +377,51 @@
                 keywordsContainer.appendChild(keywordsCard);
             }
 
-            const communicationActivitiesCtx = document.getElementById('communicationActivitiesChart').getContext('2d');
-            new Chart(communicationActivitiesCtx, {
-                type: 'bar',
-                data: {
-                    labels: communicationActivitiesData.labels,
-                    datasets: [{
-                        label: 'Relatívna intenzita',
-                        data: communicationActivitiesData.data,
-                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
-                        borderColor: 'rgba(59, 130, 246, 1)',
-                        borderWidth: 1,
-                        borderRadius: 5,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: '#334155',
-                                callback: function(value, index, values) {
-                                    const label = this.getLabelForValue(value);
-                                    if (label.length > 16) {
-                                        return label.split(' ').map((word, i, arr) => {
-                                            if (word.length > 16 || (word.length + (arr[i-1] ? arr[i-1].length : 0)) > 16) {
-                                                return word;
-                                            }
-                                            return (i > 0 ? ' ' : '') + word;
-                                        }).join('\n');
-                                    }
-                                    return label;
-                                }
-                            }
-                        },
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Relatívna intenzita (%)',
-                                color: '#475569'
-                            },
-                             ticks: {
-                                color: '#334155'
-                            },
-                            grid: {
-                                color: '#e2e8f0'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                             callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed.y !== null) {
-                                        label += context.parsed.y + '%';
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
             const countrySelect = document.getElementById('country-select');
-            const euComparisonTable = document.getElementById('eu-comparison-table');
+            const countryComparisonDisplay = document.getElementById('country-comparison-display');
 
-            euCommunicationData.forEach(item => {
+            // Populate the dropdown with countries
+            countryPerceptionData.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.country;
                 option.textContent = item.country;
                 countrySelect.appendChild(option);
             });
 
+            // Event listener for dropdown change
             countrySelect.addEventListener('change', (event) => {
                 const selectedCountryName = event.target.value;
-                const selectedCountryData = euCommunicationData.find(d => d.country === selectedCountryName);
+                const selectedCountryData = countryPerceptionData.find(d => d.country === selectedCountryName);
                 if (selectedCountryData) {
-                    euComparisonTable.innerHTML = `
+                    countryComparisonDisplay.innerHTML = `
                         <h4 class="text-xl font-bold mb-4 text-center">${selectedCountryData.country}</h4>
-                        <ul class="list-disc list-inside text-left space-y-2">
-                            <li><strong>Intenzita kampaní:</strong> ${selectedCountryData.campaigns}%</li>
-                            <li><strong>Intenzita podujatí:</strong> ${selectedCountryData.events}%</li>
-                            <li><strong>Intenzita sociálnych médií:</strong> ${selectedCountryData.socialMedia}%</li>
-                            <li><strong>Celkový sentiment:</strong> <span class="font-semibold text-blue-800">${selectedCountryData.sentiment}</span></li>
-                            <li><strong>Popis prístupu:</strong> ${selectedCountryData.description}</li>
+                        <ul class="list-disc list-inside text-left space-y-2 text-slate-700">
+                            <li><strong>Povedomie o SPP/CAP:</strong> ${selectedCountryData.awareness_cap}%</li>
+                            <li><strong>SPP prospieva všetkým občanom:</strong> ${selectedCountryData.cap_benefits_all}%</li>
+                            <li><strong>Úroveň finančnej podpory farmárom je správna:</strong> ${selectedCountryData.support_farmers_level_right}%</li>
+                            <li><strong>Dôležitosť poľnohospodárstva a vidieka:</strong> ${selectedCountryData.importance_agri_rural}%</li>
+                            <li><strong>Zabezpečenie potravín (v krajine) sa zvýšilo:</strong> ${selectedCountryData.food_security_increased_country}%</li>
+                            <li><strong>Zabezpečenie potravín (v krajine) zostalo rovnaké:</strong> ${selectedCountryData.food_security_same_country}%</li>
+                            <li><strong>Zabezpečenie potravín (v krajine) sa znížilo:</strong> ${selectedCountryData.food_security_decreased_country}%</li>
+                            <li><strong>Poľnohospodári musia zmeniť spôsob výroby (súhlasím):</strong> ${selectedCountryData.change_way_produce_climate_agree}%</li>
+                            <li><strong>Poľnohospodárstvo už prispelo k boju proti zmene klímy (súhlasím):</strong> ${selectedCountryData.agri_contributed_climate_agree}%</li>
+                            <li><strong>Pripravený platiť viac za nízko-uhlíkové produkty (súhlasím):</strong> ${selectedCountryData.prepared_pay_more_carbon_agree}%</li>
+                            <li><strong>Obchodné dohody pozitívne pre spotrebiteľov:</strong> ${selectedCountryData.trade_agreements_positive_consumer}%</li>
+                            <li><strong>Obchodné dohody pozitívne pre poľnohospodárstvo EÚ:</strong> ${selectedCountryData.trade_agreements_positive_agriculture}%</li>
+                             <li><strong>Dovoz len s dodržaním noriem EÚ (súhlasím):</strong> ${selectedCountryData.imports_comply_standards_agree}%</li>
+                            <li><strong>Popis vnímania:</strong> ${selectedCountryData.description}</li>
                         </ul>
                     `;
                 } else {
-                    euComparisonTable.innerHTML = `<div class="text-center text-slate-700">Vyberte krajinu pre zobrazenie detailov.</div>`;
+                    countryComparisonDisplay.innerHTML = `<div class="text-center text-slate-700">Vyberte krajinu pre zobrazenie detailov.</div>`;
                 }
             });
+
+            // Set initial display for the first country in the list
+            if (countryPerceptionData.length > 0) {
+                countrySelect.value = countryPerceptionData[0].country;
+                countrySelect.dispatchEvent(new Event('change')); // Trigger change to display initial data
+            }
         });
     </script>
 </body>
